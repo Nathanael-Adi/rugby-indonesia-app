@@ -27,6 +27,12 @@ const appPages: AppPage[] = [
     url: '/latest_news',
     iosIcon: mailOutline,
     mdIcon: mailSharp
+  },
+  {
+    title: 'Teammate Photos',
+    url: '/teammate_photos',
+    iosIcon: mailOutline,
+    mdIcon: mailSharp
   }
   // {
   //   title: 'Outbox',

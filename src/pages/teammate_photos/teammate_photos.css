@@ -1,0 +1,8 @@
+.toolbar-background{
+    background-image: url('../../images/header.png');
+  }
+
+.home-icon{
+    width: calc(24rem / 16);
+    height: auto;
+  }

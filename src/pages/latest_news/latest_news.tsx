@@ -4,6 +4,9 @@ import ExploreContainer from '../../components/ExploreContainer';
 import './latest_news.css';
 import '../../rugby-app.css';
 
+import bannerImage from '../../images/sub-header-news.png'
+import homeIcon from '../../images/home_icon.png';
+
 const Page: React.FC = () => {
 
     const { name } = useParams<{ name: string; }>();
@@ -11,9 +14,13 @@ const Page: React.FC = () => {
     return (
         <IonPage>
             <IonHeader>
-                <IonToolbar color="danger">
+                <IonToolbar class='navigation-bar'>
                     <IonButtons slot="start">
-                        Home Button
+                        <a href='/latest_news'>
+                            <div className='home-icon'>
+                                <img src={homeIcon} alt="home-icon" />
+                            </div>
+                        </a> 
                     </IonButtons>
                     <IonButtons slot="end">
                         <IonMenuButton />
@@ -26,9 +33,8 @@ const Page: React.FC = () => {
             </IonHeader>
             <IonContent className="ion-padding">
                 <div className="news section">
-                    <h2>Berita Terbaru</h2>
+                    <img src = {bannerImage} alt='latest-news-banner'/>
                 </div>
-                {/* <img src="./news-image-1-0" alt="news-image-1-0" /> */}
                 <div className="news section">
                     <h2>Pengurus Besar Persatuan Rugby Union Indonesia dikukuhkan oleh Komite Olahraga Nasional Indonesia</h2>
                 </div>
