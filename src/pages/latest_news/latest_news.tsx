@@ -14,7 +14,7 @@ const Page: React.FC = () => {
     return (
         <IonPage>
             <IonHeader>
-                <IonToolbar class='navigation-bar'>
+                <IonToolbar>
                     <IonButtons slot="start">
                         <a href='/latest_news'>
                             <div className='home-icon'>
