@@ -14,10 +14,6 @@ import homeIcon from '../../images/home_icon.png';
 import { PhotoImages } from "./photoImages";
 import PhotoGallery from './photoGallery';
 
-// interface TeammatePhotosProps {
-//     onClick: () => Promise<void>;
-// }
-
 const Page: React.FC = () => {
     const [images, setImages] = useState<PhotoImages[]>([]);
 
