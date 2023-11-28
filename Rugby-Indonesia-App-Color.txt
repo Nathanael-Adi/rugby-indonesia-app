@@ -1,0 +1,7 @@
+Primary dan Secondary Color dari Rugby App Indonesia
+
+Primary-shade #f60101
+Primary-tint #fc5f5f
+
+Secondary-shade #111111
+Secondary-tint #fefcfc  

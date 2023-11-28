@@ -32,17 +32,6 @@ import TeammatePhotos from './pages/teammate_photos/teammate_photos';
 setupIonicReact();
 
 const App: React.FC = () => {
-  const takePicture = async () => {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Uri
-    });
-
-    var imageUrl = image.webPath;
-    console.log(imageUrl);
-  };
-
   return (
     <IonApp>
       <IonReactRouter>

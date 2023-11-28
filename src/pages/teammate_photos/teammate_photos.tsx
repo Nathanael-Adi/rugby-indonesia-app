@@ -1,19 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton} from '@ionic/react';
 import { useParams } from 'react-router';
 import ExploreContainer from '../../components/ExploreContainer';
-import { Camera, CameraResultType } from '@capacitor/camera';
+import { Camera, Photo, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Directory, Filesystem } from '@capacitor/filesystem';
+
 import './teammate_photos.css';
 import '../../rugby-app.css';
 
 import bannerImage from '../../images/sub-header-photo.png';
 import homeIcon from '../../images/home_icon.png';
 
-interface TeammatePhotosProps {
-    onClick: () => Promise<void>;
-}
+import { PhotoImages } from "./photoImages";
+import PhotoGallery from './photoGallery';
+
+// interface TeammatePhotosProps {
+//     onClick: () => Promise<void>;
+// }
 
 const Page: React.FC = () => {
+    const [images, setImages] = useState<PhotoImages[]>([]);
+
     const takePicture = async () => {
         const image = await Camera.getPhoto({
             quality: 90,
@@ -21,11 +28,54 @@ const Page: React.FC = () => {
             resultType: CameraResultType.Uri
         });
     
-        var imageUrl = image.webPath;
+        const fileName = new Date().getTime() + '.jpeg';
+        
+        const savedFileImage = await savePicture(image, fileName);
+        var imageUrl = savedFileImage.filePath!;
         console.log(imageUrl);
+        // Can be set to the src of an image now
+        // imageElement.src = imageUrl;
+        setImages([...images, savedFileImage]);
+
     };
 
-    const { name } = useParams<{ name: string; }>();
+    const savePicture = async(photo: Photo, fileName: string):Promise<PhotoImages> => {
+        let base64data:string;
+        base64data = await base64FromPath(photo.webPath!);
+
+        const savedPicture = await Filesystem.writeFile({
+            path: fileName,
+            directory: Directory.Data,
+            data: base64data
+        });
+
+        return{
+            filePath: fileName,
+            webviewPath: photo.webPath
+        }
+    }
+
+    async function base64FromPath(path:string): Promise<string>{
+        const response = await fetch(path);
+        const blob = await response.blob();
+
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onerror = reject;
+            reader.onload = () => {
+                if (typeof reader.result === 'string')
+                {
+                    resolve(reader.result);
+                }
+                else
+                {
+                    reject('This method did not return a string');
+                }
+            };
+
+            reader.readAsDataURL(blob);
+        })
+    }
 
     return (
         <IonPage>
@@ -52,7 +102,9 @@ const Page: React.FC = () => {
                     <img src={bannerImage} alt="Teammate-Photos-Banner" />
                 </div>
                 <br></br>
-                <IonButton onClick={onClick => takePicture()}>Take Photo</IonButton> {/* Use the onClick prop directly */}
+                <IonButton color="rugbyprimary" onClick={onClick => takePicture()}>Take Photo</IonButton> {/* Use the onClick prop directly */}
+
+                <PhotoGallery photos={images} />
             </IonContent>
         </IonPage>
     );

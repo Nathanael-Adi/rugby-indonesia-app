@@ -74,6 +74,40 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /**rugby-primary**/
+  --ion-color-rugbyprimary: #f60101;
+	--ion-color-rugbyprimary-rgb: 246,1,1;
+	--ion-color-rugbyprimary-contrast: #ffffff;
+	--ion-color-rugbyprimary-contrast-rgb: 255,255,255;
+	--ion-color-rugbyprimary-shade: #d80101;
+	--ion-color-rugbyprimary-tint: #f71a1a;
+
+  /**rugby-secondary**/
+  --ion-color-rugbysecondary: #111111;
+	--ion-color-rugbysecondary-rgb: 17,17,17;
+	--ion-color-rugbysecondary-contrast: #ffffff;
+	--ion-color-rugbysecondary-contrast-rgb: 255,255,255;
+	--ion-color-rugbysecondary-shade: #0f0f0f;
+	--ion-color-rugbysecondary-tint: #292929;
+}
+
+.ion-color-rugbyprimary {
+	--ion-color-base: var(--ion-color-rugbyprimary);
+	--ion-color-base-rgb: var(--ion-color-rugbyprimary-rgb);
+	--ion-color-contrast: var(--ion-color-rugbyprimary-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-rugbyprimary-contrast-rgb);
+	--ion-color-shade: var(--ion-color-rugbyprimary-shade);
+	--ion-color-tint: var(--ion-color-rugbyprimary-tint);
+}
+
+.ion-color-rugbysecondary {
+	--ion-color-base: var(--ion-color-rugbysecondary);
+	--ion-color-base-rgb: var(--ion-color-rugbysecondary-rgb);
+	--ion-color-contrast: var(--ion-color-rugbysecondary-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-rugbysecondary-contrast-rgb);
+	--ion-color-shade: var(--ion-color-rugbysecondary-shade);
+	--ion-color-tint: var(--ion-color-rugbysecondary-tint);
 }
 
 @media (prefers-color-scheme: dark) {
