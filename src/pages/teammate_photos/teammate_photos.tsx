@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton} from '@ionic/react';
-import { useParams } from 'react-router';
-import ExploreContainer from '../../components/ExploreContainer';
 import { Camera, Photo, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 

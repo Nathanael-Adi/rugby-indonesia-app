@@ -9,8 +9,6 @@ import homeIcon from '../../images/home_icon.png';
 
 const Page: React.FC = () => {
 
-    // const { name } = useParams<{ name: string; }>();
-
     return (
         <IonPage>
             <IonHeader>
