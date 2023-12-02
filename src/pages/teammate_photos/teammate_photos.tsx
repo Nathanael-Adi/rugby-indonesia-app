@@ -96,7 +96,7 @@ const Page: React.FC = () => {
                     <img src={bannerImage} alt="Teammate-Photos-Banner" />
                 </div>
                 <br></br>
-                <IonButton color="rugbyprimary" onClick={onClick => takePicture()}>Take Photo</IonButton> {/* Use the onClick prop directly */}
+                <IonButton color="primary" onClick={onClick => takePicture()}>Take Photo</IonButton> {/* Use the onClick prop directly */}
 
                 <PhotoGallery photos={images} />
             </IonContent>
