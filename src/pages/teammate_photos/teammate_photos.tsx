@@ -77,10 +77,8 @@ const Page: React.FC = () => {
                 <IonToolbar>
                     <IonButtons slot="start">
                         <a href='/latest_news'>
-                            <div className='home-icon'>
-                                <img src={homeIcon} alt="home-icon" />
-                            </div>
-                        </a>                     
+                            <img src={homeIcon} alt="home-icon" className='home-icon' />
+                        </a>                   
                     </IonButtons>
                     <IonButtons slot="end">
                         <IonMenuButton />
