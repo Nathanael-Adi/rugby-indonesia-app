@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton} from '@ionic/react';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonIcon} from '@ionic/react';
 import { Camera, Photo, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 
@@ -10,6 +10,7 @@ import homeIcon from '../../images/home_icon.png';
 
 import { PhotoImages } from "./photoImages";
 import PhotoGallery from './photoGallery';
+import { appsSharp, camera, menuSharp } from 'ionicons/icons';
 
 const Page: React.FC = () => {
     const [images, setImages] = useState<PhotoImages[]>([]);
@@ -95,7 +96,15 @@ const Page: React.FC = () => {
                     <img src={bannerImage} alt="Teammate-Photos-Banner" />
                 </div>
                 <br></br>
-                <IonButton color="primary" onClick={onClick => takePicture()}>Take Photo</IonButton> {/* Use the onClick prop directly */}
+                <IonButton color="primary" expand='block' onClick={onClick => takePicture()}>
+                    <IonIcon slot="start" icon={camera}></IonIcon>
+                    Take Photo
+                </IonButton> {/* Use the onClick prop directly */}
+
+                <IonButton color='primary' expand='block'>
+                    <IonIcon slot="start" icon={appsSharp}></IonIcon>
+                    Load from Library
+                </IonButton>
 
                 <PhotoGallery photos={images} />
             </IonContent>
