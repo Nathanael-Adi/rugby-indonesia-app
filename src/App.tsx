@@ -23,7 +23,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-/* This one is for page */
+/* This import is for page */
 import LatestNews from './pages/latest_news/latest_news';
 import TeammatePhotos from './pages/teammate_photos/teammate_photos';
 
