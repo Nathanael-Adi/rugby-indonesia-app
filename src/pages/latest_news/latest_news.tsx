@@ -1,8 +1,5 @@
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonBackButton} from '@ionic/react';
-import { useParams } from 'react-router';
-import ExploreContainer from '../../components/ExploreContainer';
 import './latest_news.css';
-import '../../rugby-app.css';
 
 import bannerImage from '../../images/sub-header-news.png'
 import homeIcon from '../../images/home_icon.png';

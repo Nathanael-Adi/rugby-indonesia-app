@@ -4,7 +4,6 @@ import { Camera, Photo, CameraResultType, CameraSource } from '@capacitor/camera
 import { Directory, Filesystem } from '@capacitor/filesystem';
 
 import './teammate_photos.css';
-import '../../rugby-app.css';
 
 import bannerImage from '../../images/sub-header-photo.png';
 import homeIcon from '../../images/home_icon.png';
