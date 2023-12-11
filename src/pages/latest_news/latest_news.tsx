@@ -1,7 +1,8 @@
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonBackButton} from '@ionic/react';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent} from '@ionic/react';
 import './latest_news.css';
 
-import bannerImage from '../../images/sub-header-news.png'
+import bannerImage from '../../images/sub-header-news.png';
+import latestNews1 from '../../images/latest_news_image_1.jpeg';
 import homeIcon from '../../images/home_icon.png';
 
 const Page: React.FC = () => {
@@ -30,21 +31,18 @@ const Page: React.FC = () => {
                 <div className="news section">
                     <img src = {bannerImage} alt='latest-news-banner'/>
                 </div>
-                <div className="news section">
-                    <h2>Pengurus Besar Persatuan Rugby Union Indonesia dikukuhkan oleh Komite Olahraga Nasional Indonesia</h2>
-                </div>
+                <IonCard>
+                    <img alt='latest-news-image-1' src={latestNews1}/>
+                    <IonCardHeader>
+                        <IonCardTitle>Rugby Masuk Sekolah resmi dimulai di DKI Jakarta</IonCardTitle>
+                    </IonCardHeader>
 
-                <div className="news content">
-                    <p>Komite Olahraga Nasional Indonesia (KONI) Pusat resmi mengukuhkan Pengurus Besar Persatuan Rugby Union Indonesia (PB PRUI) masa bakti 2021-2025 di Hotel Grand Century, Senayan, Jakarta pada Selasa (29/3/2022). Ini merupakan kepengurusan kedua Dr. Didik Mukrianto, SH., MH sebagai Ketua Umum PB PRUI.<br></br><br></br>
-
-                        Tercatat ada 94 orang dalam kepengurusan masa bakti 2021 – 2025 dan 8 orang dewan Pembina, yang diketuai oleh Dr. Dede Yusuf Macan Effendi, ME., ST., MIPol, yang juga merupakan Wakil Ketua Komisi X di DPR RI. Kepengurusan PB PRUI memililki pengurus yang berasal dari berbagai latar belakang, dari politik hingga olahraga, menjadikan dinamika kepengurusan ini diharapkan akan berjalan dengan baik.<br></br><br></br>
-
-                        Ketua Umum PB PRUI Didik Mukrianto menjelaskan bahwa PB PRUI langsung menyusun road map program yang akan dilakukan dari PRUI setiap daerah hingga pusat. “Tentu kami juga harus berkesinambungan dan terintegrasi dari pusat hingga daerah,” kata Didik. PB PRUI selalu menganggap serius perkembangan Rugby sebagai wujud dari nasionalisme. “Pengabdian kami ke Rugby ini merupakan bagian dari komitmen konkrit kita untuk negeri, menumbuhkembangkan idealisme, nasionalisme dan kecintaan kepada negeri tercinta. jangan pernah berhenti berjuang untuk negeri,” tutur Didik.<br></br><br></br>
-
-                        Pelantikan ini menjadi momen penting, sekaligus awal yang baik bagi Didik Mukrianto. Hal senada dikatakan Ketua Umum KONI Pusat, Marciano Norman. Marciano meminta kepada PB PRUI untuk secara masif memperkenalkan olahraga rugby di Indonesia. Rugby yang merupakan salah satu cabang olahraga yang dipertandingkan di Olimpiade sudah seharusnya memiliki semangat lebih di Indonesia.</p>
-                </div>
-                <br></br>
-
+                    <IonCardContent>
+                    Program Rugby Masuk Sekolah resmi dimulai di DKI Jakarta dengan serah terima Bola dan Baju Pelatih Rugby Masuk Sekolah dari PB PRUI ke PRUI DKI Jakarta pada Hari Sabtu, 25 November 2023 di Lapangan Pondok Bambu, Jakarta. Wakil Ketua II PB PRUI, Pak Agus Djamhoer menyerahkan paket Rugby Masuk Sekolah ini kepada Pak Tito Vau selaku Ketua PRUI DKI Jakarta pada acara Kejuaraan Daerah Rugby tingkat Pelajar DKI Jakarta. 
+                    <br></br><br></br>
+                    DKI Jakarta memiliki 17 pelatih yang sudah mengikuti sertifikasi pelatih Rugby Masuk Sekolah dan siap mengajarkan T1 Rugby ke seluruh tingkatan sekolah di Jakarta. Pada saat ini tercatat sudah lebih dari 13 sekolah di Jakarta dan jumlah sekolah ini akan terus ditingkatkan seiring dengan waktu program ini berjalan.
+                    </IonCardContent>
+                </IonCard>
             </IonContent>
         </IonPage>
     );
