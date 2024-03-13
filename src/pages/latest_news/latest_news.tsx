@@ -1,4 +1,5 @@
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent} from '@ionic/react';
+import { useEffect, useState } from 'react';
 import './latest_news.css';
 
 import bannerImage from '../../images/sub-header-news.png';
@@ -6,6 +7,29 @@ import latestNews1 from '../../images/latest_news_image_1.jpeg';
 import homeIcon from '../../images/home_icon.png';
 
 const Page: React.FC = () => {
+    //membuat state untuk menyimpan data json dari url
+    const [jsonItems, setJsonItems] = useState(null);
+    const [title, setTitle] = useState('');
+
+    //menggunakan useEffect untuk melakukan fetch data saat komponen dimuat
+    useEffect(() => {
+        //membuat fungsi async untuk melakukan fetch data dari URL
+        const fetchData = async () => {
+            try {
+              //mengambil data dari URL menggunakan fetch
+              const response = await fetch('https://dnartworks.rugbyindonesia.or.id/indonesianrugby/news/list.xml');
+              const data = await response.json();
+              setJsonItems(data);
+              
+              const extractedTitle = data?.title ?? '';
+              setTitle(extractedTitle);
+            } catch (error) {
+              console.error('Error fetching data:', error);
+            }
+          };
+
+        fetchData();
+    }, []);
 
     return (
         <IonPage>
@@ -29,10 +53,11 @@ const Page: React.FC = () => {
                 <div className="news section">
                     <img src = {bannerImage} alt='latest-news-banner'/>
                 </div>
+                
                 <IonCard>
                     <img alt='latest-news-image-1' src={latestNews1}/>
                     <IonCardHeader>
-                        <IonCardTitle>Rugby Masuk Sekolah resmi dimulai di DKI Jakarta</IonCardTitle>
+                        <IonCardTitle>{title}</IonCardTitle>
                     </IonCardHeader>
 
                     <IonCardContent>
