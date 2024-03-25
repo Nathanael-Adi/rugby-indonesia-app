@@ -5,24 +5,35 @@ import './latest_news.css';
 import bannerImage from '../../images/sub-header-news.png';
 import latestNews1 from '../../images/latest_news_image_1.jpeg';
 import homeIcon from '../../images/home_icon.png';
+import axios from 'axios';
+import xml2js from 'xml2js';
 
 const Page: React.FC = () => {
     //membuat state untuk menyimpan data json dari url
     const [jsonItems, setJsonItems] = useState(null);
     const [title, setTitle] = useState('');
+    const [descripstion, setDescription] = useState('');
 
     //menggunakan useEffect untuk melakukan fetch data saat komponen dimuat
     useEffect(() => {
         //membuat fungsi async untuk melakukan fetch data dari URL
         const fetchData = async () => {
             try {
-              //mengambil data dari URL menggunakan fetch
-              const response = await fetch('https://dnartworks.rugbyindonesia.or.id/indonesianrugby/news/list.xml');
-              const data = await response.json();
+              const response = await axios.get('https://dnartworks.rugbyindonesia.or.id/indonesianrugby/news/list.xml');
+              const xml = response.data;
+              const result = await xml2js.parseStringPromise(xml);
+              const data = result.rss.channel[0].item;
+              console.log(result.rss.channel[0].item);
               setJsonItems(data);
-              
-              const extractedTitle = data?.title ?? '';
+
+              const extractedTitle = data[0].title[0];
+              console.log(extractedTitle);
               setTitle(extractedTitle);
+
+              const extractedDescription = data[0].description[0];
+              console.log(extractedDescription);
+              setDescription(extractedDescription);
+
             } catch (error) {
               console.error('Error fetching data:', error);
             }
@@ -50,20 +61,18 @@ const Page: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
-                <div className="news section">
+                <div className="news-section-image">
                     <img src = {bannerImage} alt='latest-news-banner'/>
                 </div>
                 
                 <IonCard>
-                    <img alt='latest-news-image-1' src={latestNews1}/>
+                    <img alt='latest-news-image' src={latestNews1}/>
                     <IonCardHeader>
                         <IonCardTitle>{title}</IonCardTitle>
                     </IonCardHeader>
 
                     <IonCardContent>
-                    Program Rugby Masuk Sekolah resmi dimulai di DKI Jakarta dengan serah terima Bola dan Baju Pelatih Rugby Masuk Sekolah dari PB PRUI ke PRUI DKI Jakarta pada Hari Sabtu, 25 November 2023 di Lapangan Pondok Bambu, Jakarta. Wakil Ketua II PB PRUI, Pak Agus Djamhoer menyerahkan paket Rugby Masuk Sekolah ini kepada Pak Tito Vau selaku Ketua PRUI DKI Jakarta pada acara Kejuaraan Daerah Rugby tingkat Pelajar DKI Jakarta. 
-                    <br></br><br></br>
-                    DKI Jakarta memiliki 17 pelatih yang sudah mengikuti sertifikasi pelatih Rugby Masuk Sekolah dan siap mengajarkan T1 Rugby ke seluruh tingkatan sekolah di Jakarta. Pada saat ini tercatat sudah lebih dari 13 sekolah di Jakarta dan jumlah sekolah ini akan terus ditingkatkan seiring dengan waktu program ini berjalan.
+                        {descripstion}
                     </IonCardContent>
                 </IonCard>
             </IonContent>
