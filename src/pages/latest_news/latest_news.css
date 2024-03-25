@@ -3,12 +3,6 @@
   height: auto;
 }
 
-.news-section-image img{
-  max-width: 100%;
-  display: block; /* Add this line */
-  height: auto; /* This ensures the aspect ratio is maintained */
-}
-
 ion-toolbar {
   --background: url('../../images/header.png');
   --color: white;
