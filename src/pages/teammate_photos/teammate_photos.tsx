@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonIcon} from '@ionic/react';
 import { Camera, Photo, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Directory, Filesystem } from '@capacitor/filesystem';
@@ -14,6 +14,33 @@ import { appsSharp, camera, menuSharp } from 'ionicons/icons';
 
 const Page: React.FC = () => {
     const [images, setImages] = useState<PhotoImages[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {            
+                const response = await fetch('https://dnartworks.rugbyindonesia.or.id/indonesianrugby/photos/list.json');
+                const data = await response.json();
+                const result = data.data;
+                console.log(result);
+    
+                if (!Array.isArray(result)) {
+                    throw new Error('Data is not in expected format');
+                }
+
+                const photoUrls = result.map((item: any) =>{
+                    const photoUrl = item;
+                    const modPhotoUrl = photoUrl.replace("/images/", "/");
+                    return modPhotoUrl;
+                });
+                const photoImages = photoUrls.map((url: string) => ({ webviewPath: url }));
+                setImages(photoImages);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const takePicture = async () => {
         const image = await Camera.getPhoto({
