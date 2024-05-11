@@ -1,4 +1,5 @@
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonModal } from '@ionic/react';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, 
+IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonModal } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import './latest_news.css';
 
@@ -8,15 +9,10 @@ import axios from 'axios';
 import xml2js from 'xml2js';
 
 const NewsPage: React.FC = () => {
-    //membuat state untuk menyimpan data json dari url
-    // const [jsonItems, setJsonItems] = useState(null);
-    // const [title, setTitle] = useState();
-    // const [description, setDescription] = useState('');
-    // const [thumbnail, setThumbnail] = useState('');
     const [newsItems, setNewsItems] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedItemIndex, setSelectedItemIndex] = useState(-1); // Index of the item being viewed in modal
-    // const [content, setContent] = useState('');
+    const [selectedItemIndex, setSelectedItemIndex] = useState(-1); // Index dari news yang akan 
+    // ditampilkan di modal, set -1 karena awal aplikasi dibuka, modal tidak dibuka
 
     //menggunakan useEffect untuk melakukan fetch data saat komponen dimuat
     useEffect(() => {
@@ -31,29 +27,14 @@ const NewsPage: React.FC = () => {
 
                 const extractedNews = data.map((item: { description: any[]; title: any[]; 'content:encoded': any[]; }) => {
                     const extractedContent = item.description[0];
-                    //console.log("Data: " + extractedContent)
                     const regexThumbnail = /src=&quot;(.*?)&quot;/;
                     const matchThumbnail = regexThumbnail.exec(extractedContent);
-                    //console.log("Thumbnail: " + matchThumbnail);
                     let getThumbnail = '';
                     if (matchThumbnail) {
                         getThumbnail = matchThumbnail[1];
-                        //console.log("Thumbnail: " + getThumbnail);
-                        // setThumbnail(getThumbnail);
                     }
 
                     let extractedTitle = item.title[0];
-                    // setTitle(extractedTitle);
-
-                    // const regexDescription = /<p>(.*?)<\/p>/;
-                    // const matchDescription = regexDescription.exec(extractedContent);
-                    // console.log("Description: " + matchDescription);
-                    // let getDescription = '';
-                    // if (matchDescription) {
-                    //     getDescription = matchDescription[1];
-
-                    //     setDescription(getDescription);
-                    // }
 
                     const extractedContentEncoded = item['content:encoded'][0];
                     
