@@ -12,7 +12,7 @@ import { PhotoImages } from "./photoImages";
 import PhotoGallery from './photoGallery';
 import { appsSharp, camera, menuSharp } from 'ionicons/icons';
 
-const Page: React.FC = () => {
+const TeammatePage: React.FC = () => {
     const [images, setImages] = useState<PhotoImages[]>([]);
 
     useEffect(() => {
@@ -137,4 +137,4 @@ const Page: React.FC = () => {
     );
 };
 
-export default Page;
+export default TeammatePage;
