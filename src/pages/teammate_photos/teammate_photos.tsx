@@ -52,7 +52,6 @@ const TeammatePage: React.FC = () => {
 
             // Kirim permintaan POST ke endpoint untuk mengunggah foto.
             const response = await fetch('https://dnartworks.rugbyindonesia.or.id/indonesianrugby/photos/upload.json', {
-                mode: 'no-cors',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
