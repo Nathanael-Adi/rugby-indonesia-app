@@ -21,7 +21,7 @@ const TeammatePage: React.FC = () => {
                 const response = await fetch('https://dnartworks.rugbyindonesia.or.id/indonesianrugby/photos/list.json');
                 const data = await response.json();
                 const result = data.data;
-                console.log(result);
+                //console.log(result);
     
                 if (!Array.isArray(result)) {
                     throw new Error('Data is not in expected format');
@@ -42,6 +42,40 @@ const TeammatePage: React.FC = () => {
         fetchData();
     }, []);
 
+    const uploadPhoto = async (photo: Photo) => {
+        try {
+            // Ambil identifikasi pengguna, Anda perlu menentukan cara mendapatkannya.
+            const userId = "anonymous";
+
+            // Ambil data base64 dari foto.
+            const base64data = await base64FromPath(photo.webPath!);
+
+            // Kirim permintaan POST ke endpoint untuk mengunggah foto.
+            const response = await fetch('https://dnartworks.rugbyindonesia.or.id/indonesianrugby/photos/upload.json', {
+                mode: 'no-cors',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: JSON.stringify({
+                    userId: userId,
+                    photo: base64data,
+                    frame: '' // Anda perlu menentukan frame jika diperlukan.
+                })
+            });
+            console.log("Response: " + response.status)
+            if (response.ok) {
+                // Foto berhasil diunggah.
+                console.log('Photo uploaded successfully!');
+            } else {
+                // Gagal mengunggah foto.
+                console.error('Failed to upload photo:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error uploading photo:', error);
+        }
+    };
+
     const takePicture = async () => {
         const image = await Camera.getPhoto({
             quality: 90,
@@ -58,6 +92,7 @@ const TeammatePage: React.FC = () => {
         // imageElement.src = imageUrl;
         setImages([...images, savedFileImage]);
 
+        await uploadPhoto(image);
     };
 
     const savePicture = async(photo: Photo, fileName: string):Promise<PhotoImages> => {
