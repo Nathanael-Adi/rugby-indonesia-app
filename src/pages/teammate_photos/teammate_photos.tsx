@@ -66,6 +66,21 @@ const TeammatePage: React.FC = () => {
         await uploadPhoto({ ...image, base64String: editedBase64Data });
     };
 
+    const choosePicture = async () => {
+        const image = await Camera.getPhoto({
+            quality: 100,
+            allowEditing: false,
+            resultType: CameraResultType.Base64,
+            source: CameraSource.Photos
+        });
+    
+        // Edit the photo and resize it to 400x400
+        const editedBase64Data = await editPhoto(image.base64String!);
+    
+        await uploadPhoto({ ...image, base64String: editedBase64Data });
+    };
+    
+
     const editPhoto = async (base64data: string): Promise<string> => {
         return new Promise((resolve) => {
             const canvas = document.createElement('canvas');
@@ -134,7 +149,7 @@ const TeammatePage: React.FC = () => {
                     Take Photo
                 </IonButton> {/* Use the onClick prop directly */}
 
-                <IonButton color='primary' expand='block'>
+                <IonButton color='primary' expand='block' onClick={choosePicture}>
                     <IonIcon slot="start" icon={appsSharp}></IonIcon>
                     Load from Library
                 </IonButton>
