@@ -126,6 +126,7 @@ const TeammatePage: React.FC = () => {
         if (takenPhoto) {
             const editedBase64Data = await editPhoto(takenPhoto.base64String!, frame);
             await uploadPhoto(editedBase64Data);
+            window.location.reload();
         }
         setIsOpen(false);
     };
