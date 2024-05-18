@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonIcon} from '@ionic/react';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonButton, IonIcon, IonModal, IonCol } from '@ionic/react';
 import { Camera, Photo, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 
@@ -12,19 +12,24 @@ import { PhotoImages } from "./photoImages";
 import PhotoGallery from './photoGallery';
 import { appsSharp, camera } from 'ionicons/icons';
 
-import frame01 from '../../images/frame/frame01.png';
-import frame02 from '../../images/frame/frame02.png';
-import frame03 from '../../images/frame/frame03.png';
-import frame04 from '../../images/frame/frame04.png';
-import frame05 from '../../images/frame/frame05.png';
-import frame06 from '../../images/frame/frame06.png';
-import frame07 from '../../images/frame/frame07.png';
-import frame08 from '../../images/frame/frame08.png';
-import frame09 from '../../images/frame/frame09.png';
+import frame1 from '../../images/frame/frame01.png';
+import frame2 from '../../images/frame/frame02.png';
+import frame3 from '../../images/frame/frame03.png';
+import frame4 from '../../images/frame/frame04.png';
+import frame5 from '../../images/frame/frame05.png';
+import frame6 from '../../images/frame/frame06.png';
+import frame7 from '../../images/frame/frame07.png';
+import frame8 from '../../images/frame/frame08.png';
+import frame9 from '../../images/frame/frame09.png';
 import frame10 from '../../images/frame/frame10.png';
+
+const frames = [frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8, frame9, frame10];
 
 const TeammatePage: React.FC = () => {
     const [images, setImages] = useState<PhotoImages[]>([]);
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedFrame, setSelectedFrame] = useState<string | null>(null);
+    const [takenPhoto, setTakenPhoto] = useState<Photo | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,7 +37,6 @@ const TeammatePage: React.FC = () => {
                 const response = await fetch('https://dnartworks.rugbyindonesia.or.id/indonesianrugby/photos/list.json');
                 const data = await response.json();
                 const result = data.data;
-                //console.log(result);
     
                 if (!Array.isArray(result)) {
                     throw new Error('Data is not in expected format');
@@ -59,11 +63,9 @@ const TeammatePage: React.FC = () => {
             allowEditing: false,
             resultType: CameraResultType.Base64
         });
-    
-        // Edit the photo and resize it to 400x400
-        const editedBase64Data = await editPhoto(image.base64String!);
-    
-        await uploadPhoto({ ...image, base64String: editedBase64Data });
+        
+        setTakenPhoto(image);
+        setIsOpen(true);  // Buka modal setelah foto diambil
     };
 
     const choosePicture = async () => {
@@ -73,42 +75,48 @@ const TeammatePage: React.FC = () => {
             resultType: CameraResultType.Base64,
             source: CameraSource.Photos
         });
-    
-        // Edit the photo and resize it to 400x400
-        const editedBase64Data = await editPhoto(image.base64String!);
-    
-        await uploadPhoto({ ...image, base64String: editedBase64Data });
+
+        setTakenPhoto(image);
+        setIsOpen(true);  // Buka modal setelah foto dipilih
     };
-    
 
     const editPhoto = async (base64data: string): Promise<string> => {
         return new Promise((resolve) => {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             const img = new Image();
-    
+            const frameImg = new Image();
+
             img.onload = () => {
                 canvas.width = 400;
                 canvas.height = 400;
                 ctx!.drawImage(img, 0, 0, canvas.width, canvas.height);
-                resolve(canvas.toDataURL('image/jpeg'));
+
+                if (selectedFrame) {
+                    frameImg.src = selectedFrame;
+                    frameImg.onload = () => {
+                        ctx!.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
+                        resolve(canvas.toDataURL('image/jpeg'));
+                    };
+                } else {
+                    resolve(canvas.toDataURL('image/jpeg'));
+                }
             };
-    
+
             img.src = `data:image/jpeg;base64,${base64data}`;
         });
     };
 
-    const uploadPhoto = async (photo: Photo) => {
+    const uploadPhoto = async (base64data: string) => {
         try {
             const userId = "anonymous";
-            const base64data = photo.base64String;
 
             const response = await fetch('https://dnartworks.rugbyindonesia.or.id/indonesianrugby/photos/upload.json', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: "userId=" + userId + "&photo=data:image/jpeg;base64," + base64data
+                body: `userId=${userId}&photo=${base64data}`
             });
 
             if (response.ok) {
@@ -119,6 +127,15 @@ const TeammatePage: React.FC = () => {
         } catch (error) {
             console.error('Error uploading photo:', error);
         }
+    };
+
+    const handleFrameSelection = async (frame: string) => {
+        setSelectedFrame(frame);
+        if (takenPhoto) {
+            const editedBase64Data = await editPhoto(takenPhoto.base64String!);
+            await uploadPhoto(editedBase64Data);
+        }
+        setIsOpen(false);
     };
 
     return (
@@ -144,10 +161,10 @@ const TeammatePage: React.FC = () => {
                     <img src={bannerImage} alt="Teammate-Photos-Banner" />
                 </div>
                 <br></br>
-                <IonButton color="primary" expand='block' onClick={onClick => takePicture()}>
+                <IonButton color="primary" expand='block' onClick={takePicture}>
                     <IonIcon slot="start" icon={camera}></IonIcon>
                     Take Photo
-                </IonButton> {/* Use the onClick prop directly */}
+                </IonButton>
 
                 <IonButton color='primary' expand='block' onClick={choosePicture}>
                     <IonIcon slot="start" icon={appsSharp}></IonIcon>
@@ -155,6 +172,34 @@ const TeammatePage: React.FC = () => {
                 </IonButton>
 
                 <PhotoGallery photos={images} />
+
+                <IonModal isOpen={isOpen}>
+                    <IonHeader>
+                        <IonToolbar>
+                            <IonTitle>Select Frame</IonTitle>
+                            <IonButtons slot="end">
+                                <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+                            </IonButtons>
+                        </IonToolbar>
+                    </IonHeader>
+                    <IonContent className="ion-padding">
+                        <div className="frame-selection">
+                            {frames.map((frame, index) => (
+                                <IonCol size = "6" key={index}>
+                                    <img
+                                    key={index}
+                                    src={frame}
+                                    alt={`Frame ${index + 1}`}
+                                    className={`frame-option ${selectedFrame === frame ? 'selected' : ''}`}
+                                    onClick={() => handleFrameSelection(frame)}
+                                    width={200}
+                                    height={200}
+                                />
+                                </IonCol>
+                            ))}
+                        </div>
+                    </IonContent>
+                </IonModal>
             </IonContent>
         </IonPage>
     );
