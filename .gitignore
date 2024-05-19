@@ -28,6 +28,5 @@ yarn-error.log*
 # Optional eslint cache
 .eslintcache
 
-#android build
-/android
+#ionic build
 /dist
