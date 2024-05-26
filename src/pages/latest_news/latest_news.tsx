@@ -14,7 +14,7 @@ const NewsPage: React.FC = () => {
     const [selectedItemIndex, setSelectedItemIndex] = useState(-1); // Index dari news yang akan 
     // ditampilkan di modal, set -1 karena awal aplikasi dibuka, modal tidak dibuka
 
-    //menggunakan useEffect untuk melakukan fetch data saat komponen dimuat
+    //menggunakan useEffect untuk melakukan pengambilan data
     useEffect(() => {
         //membuat fungsi async untuk melakukan fetch data dari URL
         const fetchData = async () => {
@@ -23,7 +23,6 @@ const NewsPage: React.FC = () => {
                 const xml = response.data;
                 const result = await xml2js.parseStringPromise(xml);
                 const data = result.rss.channel[0].item;
-                console.log(data[0]['content:encoded'][0]);
 
                 const extractedNews = data.map((item: { description: any[]; title: any[]; 'content:encoded': any[]; }) => {
                     const extractedContent = item.description[0];
@@ -50,10 +49,7 @@ const NewsPage: React.FC = () => {
                 console.error('Error fetching data:', error);
             }
         };
-
         fetchData();
-
-        
     }, []);
 
     const openModal = (index: number) => {

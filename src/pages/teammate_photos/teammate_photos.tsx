@@ -24,7 +24,7 @@ import frame10 from '../../images/frame/frame10.png';
 
 const frames = [frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8, frame9, frame10];
 
-const TeammatePage: React.FC = () => {
+const TeammatePhotosPage: React.FC = () => {
     const [images, setImages] = useState<PhotoImages[]>([]);
     const [isOpen, setIsOpen] = useState(false);
     const [takenPhoto, setTakenPhoto] = useState<Photo | null>(null);
@@ -198,4 +198,4 @@ const TeammatePage: React.FC = () => {
     );
 };
 
-export default TeammatePage;
+export default TeammatePhotosPage;
