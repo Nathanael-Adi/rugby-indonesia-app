@@ -59,7 +59,8 @@ const TeammatePhotosPage: React.FC = () => {
         const image = await Camera.getPhoto({
             quality: 100,
             allowEditing: false,
-            resultType: CameraResultType.Base64
+            resultType: CameraResultType.Base64,
+            source: CameraSource.Camera
         });
 
         setTakenPhoto(image);
@@ -185,8 +186,8 @@ const TeammatePhotosPage: React.FC = () => {
                                         alt={`Frame ${index + 1}`}
                                         className="frame-option"
                                         onClick={() => handleFrameSelection(frame)}
-                                        width={200}
-                                        height={200}
+                                        width={150}
+                                        height={150}
                                     />
                                 </IonCol>
                             ))}
