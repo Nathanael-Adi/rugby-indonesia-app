@@ -167,12 +167,12 @@ const TeammatePhotosPage: React.FC = () => {
 
                 <PhotoGallery photos={images} />
 
-                <IonModal isOpen={isOpen}>
+                <IonModal isOpen={isOpen} onDidDismiss={() => setIsOpen(false)}>
                     <IonHeader>
                         <IonToolbar>
                             <IonTitle>Select Frame</IonTitle>
                             <IonButtons slot="end">
-                                <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+                                <IonButton onClick={() => setIsOpen(false)}>CANCEL</IonButton>
                             </IonButtons>
                         </IonToolbar>
                     </IonHeader>

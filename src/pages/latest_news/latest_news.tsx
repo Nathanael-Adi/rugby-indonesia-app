@@ -1,5 +1,7 @@
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, 
-IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonModal } from '@ionic/react';
+import {
+    IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar,
+    IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonModal, useIonViewWillLeave, useIonViewDidEnter, IonBackButton, useIonViewWillEnter
+} from '@ionic/react';
 import { useEffect, useState } from 'react';
 import './latest_news.css';
 
@@ -11,12 +13,9 @@ import xml2js from 'xml2js';
 const NewsPage: React.FC = () => {
     const [newsItems, setNewsItems] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedItemIndex, setSelectedItemIndex] = useState(-1); // Index dari news yang akan 
-    // ditampilkan di modal, set -1 karena awal aplikasi dibuka, modal tidak dibuka
+    const [selectedItemIndex, setSelectedItemIndex] = useState(-1);
 
-    //menggunakan useEffect untuk melakukan pengambilan data
     useEffect(() => {
-        //membuat fungsi async untuk melakukan fetch data dari URL
         const fetchData = async () => {
             try {
                 const response = await axios.get('https://dnartworks.rugbyindonesia.or.id/indonesianrugby/news/list.xml');
@@ -57,6 +56,11 @@ const NewsPage: React.FC = () => {
         setIsOpen(true);
     };
 
+    const closeModal = () => {
+        setIsOpen(false);
+        setSelectedItemIndex(-1);
+    };
+
     return (
         <IonPage>
             <IonHeader>
@@ -87,18 +91,17 @@ const NewsPage: React.FC = () => {
                             <IonCardTitle>{item.title}</IonCardTitle>
                         </IonCardHeader>
                         <IonCardContent>
-                            <div dangerouslySetInnerHTML={{ __html: item.description }}></div> 
-                            {/* <a onClick={() => setIsOpen(true)}>Read More...</a> */}
+                            <div dangerouslySetInnerHTML={{ __html: item.description }}></div>
                             <a onClick={() => openModal(index)}>Read More...</a>
                         </IonCardContent>
                     </IonCard>
                 ))}
-                <IonModal isOpen={isOpen}>
+                <IonModal isOpen={isOpen} onDidDismiss={closeModal}>
                     <IonHeader>
                         <IonToolbar>
                             <IonTitle>{selectedItemIndex !== -1 ? newsItems[selectedItemIndex].title : ''}</IonTitle>
                             <IonButtons slot="end">
-                                <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+                                <IonButton onClick={closeModal}>CLOSE</IonButton>
                             </IonButtons>
                         </IonToolbar>
                     </IonHeader>
